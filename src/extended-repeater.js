@@ -17,16 +17,22 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 function repeater(str, options) {
   let addition = '';
-  let additionSeparator='';
+  let additionSeparator='|';
 
-  if (options.addition) addition = options.addition.toString();
+  if (options.addition) { 
+      addition = options.addition;
+  } else {
+    if (options.addition === false )  addition = 'false';
+    if (options.addition === null )  addition = 'null';
+  }
+  
   if (options.additionSeparator) additionSeparator = options.additionSeparator.toString();
   addition = addition + additionSeparator;
 
   if (options.additionRepeatTimes) addition = 
     addition.repeat(Number(options.additionRepeatTimes));
 
-  if (options.additionSeparator) addition = addition.slice(0, -additionSeparator.toString().length);
+  addition = addition.slice(0, -additionSeparator.length);
  
   let newstr = str;
   let separator = '+';
