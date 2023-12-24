@@ -23,9 +23,32 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+const isExist = (i, j, iMax, jMax)  => {
+  return (i >= 0 && i < iMax && j >=0 && j < jMax);
+} 
+function minesweeper(matrix) {
+  let res = [];
+   let p = [];
+   const arr = matrix.map(item => item.map(i => i ? 1 : 0));
+   for(let i = 0; i < arr.length; i++) { 
+    p = [];
+     for (let j = 0; j < arr[i].length; j++) {
+       let count = 0;
+       const iMax = arr.length;
+       const jMax = arr[i].length;
+       if (isExist(i - 1, j - 1, iMax, jMax))  count = count + arr[i - 1][j - 1]; 
+       if (isExist(i - 1, j, iMax, jMax))  count = count +  arr[i - 1][j]; 
+       if (isExist(i - 1, j + 1, iMax, jMax))  count = count + arr[i - 1][j + 1]; 
+       if (isExist(i, j + 1, iMax, jMax))   count = count +  arr[i][j + 1] ;  
+       if (isExist(i + 1, j + 1, iMax, jMax))  count = count +  arr[i + 1][j + 1]; 
+       if (isExist(i + 1, j, iMax, jMax))  count = count +  arr[i + 1][j]; 
+       if (isExist(i + 1, j - 1, iMax, jMax))  count = count +  arr[i + 1][j - 1]; 
+       if (isExist(i, j - 1, iMax, jMax))  count = count +  arr[i][j - 1]; 
+       p[j] = count;
+     } 
+     res[i] = p;
+   }
+   return res;
 }
 
 module.exports = {
